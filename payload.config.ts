@@ -1,12 +1,14 @@
 import { buildConfig } from 'payload/config';
-import dotenv from 'dotenv';
 
-dotenv.config();
+import Users from './src/payload/collections/Users';
+import Categories from './src/payload/collections/Categories';
+import Posts from './src/payload/collections/Posts';
+import Tags from './src/payload/collections/Tags';
 
-console.log({ publicUrl: process.env.PAYLOAD_PUBLIC_SERVER_URL });
-
-// TODO: impl proper .env handling
 export default buildConfig({
-	serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
-	collections: [],
+	serverURL: 'http://localhost:3000',
+	admin: {
+		user: Users.slug,
+	},
+	collections: [Categories, Posts, Tags, Users],
 });

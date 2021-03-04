@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from 'src/server/app.module';
+import { AppModule } from './app.module';
 import payload from 'payload';
 
 async function bootstrap() {
@@ -15,4 +15,6 @@ async function bootstrap() {
 	await app.listen(3000);
 }
 
-bootstrap();
+bootstrap().catch((e) =>
+	console.error('[ERROR]: unrecoverable nest error:', e),
+);
