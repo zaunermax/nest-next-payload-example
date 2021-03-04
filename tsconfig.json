@@ -15,5 +15,5 @@
 		"strict": true,
 		"noUncheckedIndexedAccess": true
 	},
-	"include": ["src/server/**/*.ts", "payload.config.ts"]
+	"include": ["src/server/**/*.ts", "payload.config.ts", "src/payload/**/*.ts"]
 }

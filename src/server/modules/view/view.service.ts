@@ -1,6 +1,10 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import next from 'next';
-import NextServer from 'next/dist/next-server/server/next-server';
+
+type NextServer = ReturnType<typeof next>;
+type Handler = ReturnType<NextServer['getRequestHandler']>;
+
+const dev = process.env.NODE_ENV !== 'production';
 
 @Injectable()
 export class ViewService implements OnModuleInit {
@@ -8,15 +12,15 @@ export class ViewService implements OnModuleInit {
 
 	async onModuleInit(): Promise<void> {
 		try {
-			this.server = next({ dev: true, dir: './src/client' });
+			this.server = next({ dev, dir: './src/client' });
 			await this.server.prepare();
 		} catch (error) {
 			console.log(error);
 		}
 	}
 
-	getNextServer(): NextServer {
+	public handle(...args: Parameters<Handler>): Promise<void> {
 		if (!this.server) throw new Error('Next not correctly initialized.');
-		return this.server;
+		return this.server.getRequestHandler()(...args);
 	}
 }
